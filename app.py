@@ -41,7 +41,7 @@ prediction_length = st.number_input("Enter the number of words to predict:", min
 activation_fn = activation_function.lower()
 
 # Construct the model filename based on user criteria
-def prediction_words(model, user_text, prediction_length, context_length):
+def prediction_words( user_text, prediction_length, context_length):
     words = random.sample(list(stoi.keys()), prediction_length)
     for i in words:
         user_text = user_text + " " + i
@@ -95,12 +95,6 @@ def predict_next_words(model, input_text, k, context_length):
 
 
 if st.button("Predict"):
-    try:
-        model=torch.load(model_path, map_location=torch.device('cpu'))
-        model.eval()  # Switch to evaluation mode
-    except RuntimeError as e:
-        st.error(f"Error loading model: {e}")
-
-    
-    prediction = prediction_words(model, user_text, prediction_length, context_length)
+   
+    prediction = prediction_words(user_text, prediction_length, context_length)
     st.write(prediction)
